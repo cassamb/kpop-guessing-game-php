@@ -19,10 +19,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // If the user accessed the page (p
 
     // Updating the PDO object for ease of use throughout program and closing general server connection
     $pdo = update_pdo($dbname, $dbusername, $dbpassword);
-    $conn = null;  
+    $conn = null; 
+
+    // Instantiating global game variables
+    $groups = shuffle_groups($pdo);
+    $qCount = 0;
+    $totalQs = count($groups);
+    $score = 0;
+    $numCrrct = 0;
+    $choices = [];
+    $ans = "";
+    
+    echo "There are " . $totalQs . " questions in this quiz";
+    
 
 } else { // Otherwise, ...
     // Redirect the user to the homepage and kill the script
     header("Location: ../index.php");
     die();
+}
+
+function shuffle_groups(object $pdo) {
+
+    return get_shuffled_groups($pdo);
+    
 }

@@ -67,3 +67,16 @@ function insert_data(object $conn, string $dbname) {
     }
 
 }
+
+/* GAMEPLAY FUNCTIONS */
+
+// Shuffles the entries of the 'groups' table and returns the result as an associative array
+function get_shuffled_groups(object $pdo) {
+
+    $query = $pdo->prepare("SELECT name FROM groups ORDER BY RAND();");
+    $query->execute();
+
+    $results = $query->fetchAll(PDO::FETCH_ASSOC);
+    return $results;
+
+}
