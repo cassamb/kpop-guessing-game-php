@@ -4,7 +4,22 @@
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") { // If the user accessed the page (properly) by submitting a form via POST method
 
-    echo "This is the game controller";
+    require_once "dbh.inc.php";
+    require_once "game_model.inc.php";
+
+    // Checking if the given database has already been instantiated
+    if (!check_db_status($conn, $dbname)) {
+
+        // Database instantiation and initialization
+        create_db($conn, $dbname);      // Creating the database
+        create_table($conn, $dbname);   // Creating a table
+        insert_data($conn, $dbname);    // Populating the table
+
+    }
+
+    // Updating the PDO object for ease of use throughout program and closing general server connection
+    $pdo = update_pdo($dbname, $dbusername, $dbpassword);
+    $conn = null;  
 
 } else { // Otherwise, ...
     // Redirect the user to the homepage and kill the script
