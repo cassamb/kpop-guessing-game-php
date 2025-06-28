@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
     <title>Kpop Guessing Game: PHP</title>
     
     <script>
@@ -25,7 +26,9 @@
         var choices = [];               // Array to populate choices
         var crrctAns = "";              // Correct answer for current question
 
-        // Shuffles the given array (helper function)
+        /* HELPER FUNCTIONS */
+
+        // [HELPER] Shuffles the given array
         function shuffle(arr) {
 
             for (var i = arr.length - 1; i > 0; i--) {
@@ -37,21 +40,52 @@
 
         }
 
-        // Removes the welcome UI elements from view to indicate start of game
+        // [HELPER] Determines if the given choice is unique in the current lineup
+        function isUnique(ans) 
+        {
+            for (var c = 0; c < choices.length; c++)
+            {
+                if (choices[c] == ans)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // [HELPER] Disables the multiple choice buttons
+        function disableButtons() {
+            for (var i = 1; i < 5; ++i)
+            { 
+				btn = document.getElementById("opt-" + i);
+                btn.disabled = true;
+			}
+        }
+
+        // [HELPER] Returns buttons back to original state
+        function resetButtons() {
+            for (var i = 1; i < 5; ++i)
+            { 
+				btn = document.getElementById("opt-" + i);
+                btn.disabled = false;                   // Reactivating button
+                btn.style.border = "2px solid black";   // Returning border back to normal
+			}
+        }
+
+        /* MAIN GAME FUNCTIONS */
+
+        // Hides the welcome UI elements and shows the game UI elements in the view to indicate start of game
         function start() {
-
-            document.getElementById("game-title").style.display = "none";
-            document.getElementById("welcome-msg").style.display = "none";
-            document.getElementById("start-btn").style.display = "none";
-
+            document.getElementsByClassName("welcome-page")[0].style.display = "none";
+            document.getElementsByClassName("game-page")[0].style.display = "block";
             update();
         }
 
         // Main game loop
         function update(){
             
-            crrctAns = names[qCount];
-            score = (numCrrct/totalQs) * 100; // Updating user's score
+            crrctAns = names[qCount];           // Updating correct answer for current question
+            score = (numCrrct/totalQs) * 100;   // Updating user's score
 
             // Updating gameplay UI elements
             document.getElementById("qstn-num").textContent = "Question # " + (qCount + 1);
@@ -100,19 +134,6 @@
                 }
             }
         }
-        
-        // [HELPER] Determines if the given choice is unique in the current lineup
-        function isUnique(ans) 
-        {
-            for (var c = 0; c < choices.length; c++)
-            {
-                if (choices[c] == ans)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
 
         // Assigns each answer to a button
         function setChoices() {
@@ -133,65 +154,84 @@
 
         // onclick function
         function buttonClicked(self) {
+            
             var userAns = self.getAttribute("value");
 
             if (userAns == crrctAns)
             { 
+                self.style.border = "2px solid green"; // Highlighting the answer choice to be green
                 numCrrct++; 
+            } 
+            else {
+                self.style.border = "2px solid red"; // Highlighting the answer choice to be red
             }
 
-            ++qCount;
-            update();
-            
+            disableButtons();
+
         }
 
-        // Removes the gameplay UI elements from view to indicate end of game
-        function end() {
+        function next() {
+            resetButtons();
 
-            document.getElementById("qstn-num").style.display = "none";
-            document.getElementById("pic").style.display = "none";
-            document.getElementById("btns").style.display = "none";
+            ++qCount;   // Increment "loop counter"
+            update();   // Progress the game
+        }
+
+        // Hides gameplay UI elements and shows ending UI element in view to indicate end of game
+        function end() {
+            document.getElementsByClassName("game-page")[0].style.display = "none";
+            document.getElementsByClassName("ending-page")[0].style.display = "block";
             
-            document.getElementById("score").innerHTML = "<h1>Final Score: " +  score + "%</h1>";
-            document.getElementById("ending-msg").style.display = "block";
+            document.getElementById("final-score").innerHTML = "<h1>Final Score: " +  score + "%</h1>";
         }
 
     </script>
 </head>
+
 <body>
     <!-- Welcome Page Elements -->
-    <div id="game-title">
-        <h1>Kpop Guessing Game</h1>
-    </div>
-
-    <div id="welcome-msg">
-        <p>
-            Welcome to the Kpop Quiz! <br> This quiz consists of 20 multiple choice questions
+    <div class="welcome-page">
+        <h1 id="game-title">Kpop Guessing Game</h1>
+        
+        <p id="welcome-msg">
+            Welcome to the Kpop Quiz! 
+            <br><br> 
+            This quiz consists of 20 multiple choice questions
             that will test your knowledge of male and female Kpop groups! For those who are new 
             to Kpop, take this opportunity to learn about it! This quiz is <em>just for fun</em>
 			so no pressure. Now that's out of the way, let's find out if you can answer all 20 
-            questions correctly! <br> Click the start button below to begin!
+            questions correctly! 
+            <br><br>
+            <span style="font-weight: bold;">Click the start button below to begin!</span>
         </p>
+
+        <button id="start-btn" onclick="start()">Start Game</button>
     </div>
-
-    <button id="start-btn" onclick="start()">Start Game</button>
-
-    <!-- Gameplay Elements -->
-    <h2 id="qstn-num"></h2>
-    <h3 id="score"></h3>
     
-    <img id="pic" src="" alt="">
+    <!-- Gameplay Elements -->
+    <div class="game-page">
+        <h2 id="qstn-num"></h2>
+        <h3 id="score"></h3>
+    
+        <img id="pic" src="" alt="">
 
-    <div id="qstn-prompt"></div>
+        <div id="qstn-prompt"></div>
 
-    <div id="btns">
-        <input id="opt-1">
-        <input id="opt-2">
-        <input id="opt-3">
-        <input id="opt-4">
+        <div id="btns">
+            <input id="opt-1">
+            <input id="opt-2">
+            <input id="opt-3">
+            <input id="opt-4">
+        </div>
+
+        <button id="nxt-btn" onclick="next()">Next</button>
     </div>
-
+        
     <!-- Ending Page Elements -->
-    <p id="ending-msg">Thanks for playing! <br> Refresh the page to play another round!</p>
+    <div class="ending-page">
+        <h3 id="final-score"></h3>
+        <p id="ending-msg">Thanks for playing! Refresh the page to play another round!</p>
+    </div>
+    
 </body>
 </html>
