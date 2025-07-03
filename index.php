@@ -68,7 +68,7 @@
             { 
 				btn = document.getElementById("opt-" + i);
                 btn.disabled = false;                   // Reactivating button
-                btn.style.border = "2px solid black";   // Returning border back to normal
+                btn.style.border = "8px solid #ffbe73";   // Returning border back to normal
 			}
         }
 
@@ -156,22 +156,33 @@
         function buttonClicked(self) {
             
             var userAns = self.getAttribute("value");
+            var feedback = document.getElementById("user-feedback");
+            document.getElementById("nxt-btn").textContent = "Next Question";
 
             if (userAns == crrctAns)
             { 
-                self.style.border = "2px solid green"; // Highlighting the answer choice to be green
+                self.style.border = "8px solid #00a708"; // Highlighting the answer choice to be green
+                feedback.textContent = "Congrats! " + crrctAns + " is the correct answer!";
+                feedback.style.color = "#00a708";
                 numCrrct++; 
             } 
             else {
-                self.style.border = "2px solid red"; // Highlighting the answer choice to be red
+                self.style.border = "8px solid #c90000"; // Highlighting the answer choice to be red
+                feedback.textContent = "Sorry! " + crrctAns + " is the correct answer!";
+                feedback.style.color = "#c90000";
             }
 
+            feedback.style.display = "block";
             disableButtons();
 
         }
 
         function next() {
+            // Reseting the page UI elements for next question
             resetButtons();
+            document.getElementById("user-feedback").textContent = "";          // Clearing user feedback for next question
+            document.getElementById("nxt-btn").textContent = "Skip Question";   // "Skip" instead of "Next"
+
 
             ++qCount;   // Increment "loop counter"
             update();   // Progress the game
@@ -182,25 +193,36 @@
             document.getElementsByClassName("game-page")[0].style.display = "none";
             document.getElementsByClassName("ending-page")[0].style.display = "block";
             
-            document.getElementById("final-score").innerHTML = "<h1>Final Score: " +  score + "%</h1>";
+            document.getElementById("final-score").textContent = "Your final score is " +  score + "%";
+            
+            var msg = document.getElementById("special-msg");
+
+            if (score < 70) {
+                msg.textContent = "Sorry, you failed :( It seems like you might need a little more practice!";
+            } else if (score >= 70 && score < 100){
+                msg.textContent = "Yay, you passed :) You missed a few, but you seem to know quite a bit about Kpop!";
+            } else { // score == 100
+                msg.textContent = "Congrats, you got a perfect score! You've definitely earned yourself some bragging rights!";
+            }
+
+            msg.textContent += " Feel free to refresh the page if you would like to give the quiz another go!";
         }
 
     </script>
 </head>
 
 <body>
+    
     <!-- Welcome Page Elements -->
     <div class="welcome-page">
         <h1 id="game-title">Kpop Guessing Game</h1>
+        <h2 id="game-subtitle">Welcome to the Kpop Quiz!</h2>
         
-        <p id="welcome-msg">
-            Welcome to the Kpop Quiz! 
-            <br><br> 
-            This quiz consists of 20 multiple choice questions
-            that will test your knowledge of male and female Kpop groups! For those who are new 
-            to Kpop, take this opportunity to learn about it! This quiz is <em>just for fun</em>
-			so no pressure. Now that's out of the way, let's find out if you can answer all 20 
-            questions correctly! 
+        <p id="welcome-msg"> 
+            This quiz consists of 20 multiple choice questions that will test your knowledge
+            of popular male and female Kpop groups. Whether you've listened to Kpop for years
+            or you're unfamiliar with the genre, this quiz is for everyone! Without further 
+            ado, let's get started! 
             <br><br>
             <span style="font-weight: bold;">Click the start button below to begin!</span>
         </p>
@@ -211,11 +233,11 @@
     <!-- Gameplay Elements -->
     <div class="game-page">
         <h2 id="qstn-num"></h2>
-        <h3 id="score"></h3>
+        <h2 id="score"></h2>
     
         <img id="pic" src="" alt="">
 
-        <div id="qstn-prompt"></div>
+        <p id="qstn-prompt">What is the name of the group shown above?</p>
 
         <div id="btns">
             <input id="opt-1">
@@ -224,13 +246,18 @@
             <input id="opt-4">
         </div>
 
-        <button id="nxt-btn" onclick="next()">Next</button>
+        <p id="user-feedback"></p>
+
+        <button id="nxt-btn" onclick="next()">Skip Question</button>
     </div>
         
     <!-- Ending Page Elements -->
     <div class="ending-page">
-        <h3 id="final-score"></h3>
-        <p id="ending-msg">Thanks for playing! Refresh the page to play another round!</p>
+        <h1 id="final-score"></h1>
+
+        <p id="special-msg"></p>
+
+        <h2 id="thanks-msg">Thanks for playing!</h2>
     </div>
     
 </body>

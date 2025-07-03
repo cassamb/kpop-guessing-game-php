@@ -2,49 +2,88 @@
 
 body {
     font-family: Outfit, Garamond;
+    font-weight: 550;
     text-align: center;
+    background-color: #ffeedb;
+    color: #844700;
 }
+
+#game-title {
+    font-size: 85px;
+}
+
+h2 {
+    font-size: 32px;
+} 
 
 h1 {
-    font-size: 50px;
-}
+    font-size: 40px;
+} 
 
 p {
-    font-size: 1.2em;
-    margin-right: 25%;
-    margin-left: 25%;
+    font-size: 20px;
+    margin-right: 15%;
+    margin-left: 15%;
 }
 
 .welcome-page {
     display: block; 
-    padding-top: 10%;
+    margin-top: 10%;
 }
 
 button, input {
     display: inline-block;
-    border-radius: 10px;
-    padding: 5px;
-    margin: 10px 4px;
-    font-size: 16px;
+    width: 115px;
+    height: 60px;
+    border-radius: 16px;
+    margin: 10px;
+    font-size: 14px;
     font-weight: bold;
+    box-shadow: 1px 2px 3px #848484;
+    color: #a65900;
+    background-color: #ffddb7;
+    border: 8px solid #ffbe73;
 }
 
 .game-page {
     display: none;
+    /* margin-top: 5%; */
+}
+
+#nxt-btn {
+    width: 140px;
+    height: 60px;
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+}
+
+.game-page, p {
+    font-weight: bold;
+}
+
+#user-feedback {
+    font-size: 16px;
 }
 
 #score {
     position: absolute;
-    right: 200px;
+    right: 150px;
 }
 
 img {
+    /* border: 10px solid #844700; */
+    border-radius: 10px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: 25%;
+    height: auto;
 }
+
+
 
 .ending-page {
     display: none;
+    margin-top: 10%;
 }
