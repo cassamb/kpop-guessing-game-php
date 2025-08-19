@@ -1,5 +1,5 @@
 <?php
-    require_once "dbh.php"; 
+    require_once "getData.php"; 
 ?>
 
 <!DOCTYPE html>
@@ -254,10 +254,10 @@
     <!-- Ending Page Elements -->
     <div class="ending-page">
         <h1 id="final-score"></h1>
-
         <p id="special-msg"></p>
-
         <h2 id="thanks-msg">Thanks for playing!</h2>
+
+        <button id="home-btn" onclick="window.location.reload();">Home Page</button>
     </div>
     
 </body>

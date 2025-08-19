@@ -33,7 +33,7 @@ p {
 
 button, input {
     display: inline-block;
-    width: 115px;
+    width: 125px;
     height: 60px;
     border-radius: 16px;
     margin: 10px;
@@ -80,8 +80,6 @@ img {
     width: 25%;
     height: auto;
 }
-
-
 
 .ending-page {
     display: none;
