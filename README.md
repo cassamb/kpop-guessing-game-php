@@ -63,7 +63,12 @@ Given the specifications and the simple nature of the project, procedural progra
 
 ### Back-End Design
 
-The most apparent change from the last iteration is the addition of a database to store the flashcard data. Therefore, we'll be working with the 'flashcards' database which contains a 'groups' table that holds the ID (primary key), NAME, and URL for each group. The data was to be specifically loaded from the groups.csv file. Originally, students were provided files that contained SQL code to assist with instantiating the database, it's table, and it's data manually. The process was a bit convulted, so instead an external database handler (see [kpop-guessing-game-dbh](https://github.com/cassamb/kpop-guessing-game-dbh) repository) has been created to streamline the initialization process a bit more. Users are now able to view the 'groups' table entries and ensure the images are being rendered properly.
+The most apparent change from the last iteration is the addition of a database to store the flashcard data. Therefore, we'll be working with the 'flashcards' database which contains a 'groups' table that holds the ID (primary key), NAME, and URL for each group. The data was to be specifically loaded from the groups.csv file. Originally, students were provided files that contained SQL code to assist with instantiating the database, it's table, and it's data manually. The process was a bit convulted, so instead an external database handler (see [kpop-guessing-game-dbh](https://github.com/cassamb/kpop-guessing-game-dbh) repository) has been created to streamline the initialization process a bit more. The handler is responsible for the following:
+* Establishing a server connection and checking whether or not the ‘flashcards’ database currently exists on the user’s local machine. 
+* Instantiates the ‘flashcards’ database if it does not currently exist.
+* Shuffles the order of the questions and populates the names and urls arrays respectively.
+
+**Users are now also able to view the 'groups' table entries and ensure the images are being rendered properly.**
 
 ## Afterword
 
@@ -85,5 +90,8 @@ In an effort to improve the user experience, the following additions have been m
 ### Future Expectations
 
 The functionality expected in the next iteration of the program includes the following:
-* Improved storage capability with relational database implementation (PHP & SQL).
-* Improved UX with visual and text feedback for user input as well as the implementation of a skipping mechanism.
+* UX Improvements 
+  * Better visual feedback so correct answer is highlighted if the user selects a wrong answer.
+  * Hint mechanism which allows users to receive hints for each question through process of elimination.
+  * Score bar implementation
+* Improved storage capabilties via AJAX (all groups data no longer need to be stored on the client-side).
