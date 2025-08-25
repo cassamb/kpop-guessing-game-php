@@ -21,7 +21,7 @@ This is a continuation of the JavaScript implementation (refer to the [kpop-gues
 
 ### Project Overview
 
-As mentioned before, this project is a flashcard quiz game so the user is presented an image of a Kpop group along with four possible names for that group (3 wrong answers, one correct answer). If the user selects the correct answer, their score is incremented; otherwise, the score stays the same. This continues until the array of "flashcards" has been exhausted.
+As mentioned before, this project is a flashcard quiz game so the user is presented an image of a Kpop group along with four possible names for that group (3 wrong answers, one correct answer). If the user selects the correct answer, their score is incremented; otherwise, the score stays the same. This continues until the array of "flashcards" has been exhausted. Once the game is considered over, the user’s final score is displayed and they are prompted to return to the home page to start the game again.
 
 ## Specifications
 
@@ -38,8 +38,13 @@ The UI design was left to the student’s discretion, so there was a freedom to 
   * Randomized Image
   * Prompt
   * Multiple Choice Buttons
+  * **Next Button**
 * **Ending Page**: Page that is displayed once the user completes the game and displays the user's final score.
   * Final Score
+  * **Customized Goodbye Message**
+  * Home Button
+
+The **bold** elements denote components of the UI that were not required in the original assignment specification; however, they are included in this implementation in an effort to improve the usability and user experience while operating the program.
 
 ### Logical Requirements
 
@@ -67,8 +72,7 @@ The most apparent change from the last iteration is the addition of a database t
 * Establishing a server connection and checking whether or not the ‘flashcards’ database currently exists on the user’s local machine. 
 * Instantiates the ‘flashcards’ database if it does not currently exist.
 * Shuffles the order of the questions and populates the names and urls arrays respectively.
-
-**Users are now also able to view the 'groups' table entries and ensure the images are being rendered properly.**
+* Displays the 'groups' table entries to ensure the images are rendered properly.
 
 ## Afterword
 
@@ -77,7 +81,7 @@ The most apparent change from the last iteration is the addition of a database t
 #### Functional Modifications
 
 Given this project was assigned in a lower-level programming and design course, the requirements and capabilities of the program are reflective of my knowledge at the time. Therefore, in an effort to improve the quality of this project in terms of usability and generality, the following changes have been made to the program:
-* **The inclusion of a database handler:** Originally, the database initialization was a preliminary step that *had* to be done manually by the user independent of the program's execution. In this implementation, a database handler is integrated into the program itslef and takes care of that for the user. The handler checks whether the “flashcards” database exists or not. If it does not exist, it is instantiated for the user using the provided .csv file; otherwise, the program references the existing database. Thus, all the user is required to do is to start the Apache and MySQL modules in XAMPP. 
+* **The inclusion of a database handler:** Originally, the database initialization was a preliminary step that *had* to be done manually by the user independent of the program's execution. In this implementation, an external database initializer/handler is available to supplement the execution of the program (see [kpop-guessing-game-dbh](https://github.com/cassamb/kpop-guessing-game-dbh) repository for more details). The handler checks whether the “flashcards” database exists or not. If it does not exist, it is instantiated for the user using the provided .csv file; otherwise, the program references the existing database. Thus, all the user is required to do is to start the Apache and MySQL modules in XAMPP. 
 * **Using PDO instead of sqli for the database connection:** sqli was used to connect to the server in the original specification; however, in an effort to not constrain the user to only SQL databases, a PDO connection was used in this implementation as well as the next.
 
 #### Non-Functional Modifications

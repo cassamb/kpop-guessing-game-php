@@ -205,7 +205,6 @@
                 msg.textContent = "Congrats, you got a perfect score! You've definitely earned yourself some bragging rights!";
             }
 
-            msg.textContent += " Feel free to refresh the page if you would like to give the quiz another go!";
         }
 
     </script>
